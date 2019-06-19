@@ -3,7 +3,6 @@ Often, you'll want to select more than 1 random document at a time. There are 2 
 
 Rinse & Repeat
 This method is straight forward. Simply repeat the process, including selecting a new random integer each time.
-
 This method will give you random sequences of documents without worrying about seeing the same patterns repeatedly.
 
 The trade-off is it will be slower than the next method since it requires a separate round trip to the service for each document.
