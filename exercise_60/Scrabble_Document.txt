@@ -1,0 +1,23 @@
+Selecting multiple random documents
+Often, you'll want to select more than 1 random document at a time. There are 2 different ways to adjust the above techniques depending on what trade offs you want.
+
+Rinse & Repeat
+This method is straight forward. Simply repeat the process, including selecting a new random integer each time.
+
+This method will give you random sequences of documents without worrying about seeing the same patterns repeatedly.
+
+The trade-off is it will be slower than the next method since it requires a separate round trip to the service for each document.
+
+Keep it coming
+In this approach, simply increase the number in the limit to the desired documents. It's a little more complex as you might return 0..limit documents in the call. You'll then need to get the missing documents in the same manner, but with the limit reduced to only the difference. If you know there are more documents in total than the number you are asking for, you can optimize by ignoring the edge case of never getting back enough documents on the second call (but not the first).
+
+The trade-off with this solution is in repeated sequences. While the documents are randomly ordered, if you ever end up overlapping ranges you'll see the same pattern you saw before. There are ways to mitigate this concern discussed in the next section on reseeding.
+
+This approach is faster than 'Rinse & Repeat' as you'll be requesting all the documents in the best case a single call or worst case 2 calls.
+
+Reseeding for ongoing randomness
+While this method gives you documents randomly if the document set is static the probability of each document being returned will be static as well. This is a problem as some values might have unfairly low or high probabilities based on the initial random values they got. In many use cases, this is fine but in some, you may want to increase the long term randomness to have a more uniform chance of returning any 1 document.
+
+Note that inserted documents will end up weaved in-between, gradually changing the probabilities, as will deleting documents. If the insert/delete rate is too small given the number of documents, there are a few strategies addressing this.
+
+
