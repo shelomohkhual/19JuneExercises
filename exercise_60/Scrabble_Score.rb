@@ -1,19 +1,19 @@
 
 class Input
-    attr_reader :processor
+    attr_reader :processor, :file
     def initialize(file)
-    @processor=Processor.new
+    @processor=Processor.new(file)
+    # @file=file
     end
-    Processor.report
+    @processor.report
 end
 
 class Document
-    attr_accessor :ttl_doc_scre,:document
+    attr_accessor :ttl_doc_scre
     def initialize(file)
     @ttl_doc_scre=ttl_doc_scre
     @document=document
     end
-    File.open(file, "r"){ |file| @document = file.read }
     
 end
 
@@ -40,7 +40,7 @@ end
 class Processor
     attr_reader :scrabble_scores
     attr_accessor :document
-    def initialize
+    def initialize(file)
     @scrabble_scores= {
                     "A"=>1, "E"=>1, "I"=>1, "O"=>1, "U"=>1, "L"=>1, "N"=>1, "R"=>1, "S"=>1, "T"=>1,
                     "D"=>2,"G"=>2,
@@ -49,7 +49,9 @@ class Processor
                     "K"=>5,
                     "J"=>8, "X"=>8,
                     "Q"=>10,"Z"=>10}
-        @document=document
+        @file=file
+        @document=File.open(file, "r"){ |file| @document = file.read }
+
     end
 
     def report
@@ -60,7 +62,9 @@ class Processor
         puts Word.hgt_snt_scre.keys[0]
     end
 
-    def parsering_document
+
+    def parsering_document(document)
+
         document_score=0
         splited_document=Document.document.split(".||?")
         splited_document.each do |sentence|
@@ -108,4 +112,11 @@ end
 
 
 # DRIVER CODE
-Input.new("Scrabble_Document.txt")
+input = Input.new()
+processor = Processor.new()
+
+document = input.Read("Scrabble_Document.txt")
+sentence = parsering.document_(document)
+sentence = calcuation.document_(document)
+
+word = processor.CalculateScores(sentence)
