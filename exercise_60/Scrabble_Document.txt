@@ -18,5 +18,3 @@ Reseeding for ongoing randomness
 While this method gives you documents randomly if the document set is static the probability of each document being returned will be static as well. This is a problem as some values might have unfairly low or high probabilities based on the initial random values they got. In many use cases, this is fine but in some, you may want to increase the long term randomness to have a more uniform chance of returning any 1 document.
 
 Note that inserted documents will end up weaved in-between, gradually changing the probabilities, as will deleting documents. If the insert/delete rate is too small given the number of documents, there are a few strategies addressing this.
-
-
